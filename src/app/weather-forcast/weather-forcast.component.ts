@@ -15,6 +15,9 @@ export class WeatherForcastComponent implements OnInit {
   public buildCityForm: FormGroup;
   public model: any;
   public temprature: number;
+  public weather: string;
+  public sunrise: string;
+  public sunset: string;
 
   constructor(public WeatherApiService : WeatherApiService,private formBuilder: FormBuilder) { }
 
@@ -24,17 +27,24 @@ export class WeatherForcastComponent implements OnInit {
     
   }
 
+  getMoreInformation(data: any)
+  {
+    this.weather = data.weather[0].description;
+    this.sunrise =  new Date(data.sys.sunrise * 1000).toLocaleTimeString('en-US');
+    this.sunset =  new Date(data.sys.sunset * 1000).toLocaleTimeString('en-US');
+    this.temprature = Math.round(data.main.temp);
+    this.isLoaded = true;
+    this.isGeoLocationAvailabe = true;
+  }
   getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
         if (position) {
           this.lat = position.coords.latitude;
           this.lng = position.coords.longitude;
-          this.isGeoLocationAvailabe = true;
           this.WeatherApiService.getInfo(this.lat,this.lng,"18ca957759875d832ae134954d5cdddf").subscribe(data => {
             this.model = data;
-            this.temprature = Math.round(data.main.temp);
-            this.isLoaded = true;
+            this.getMoreInformation(data);
           })
         }
       },
@@ -55,9 +65,7 @@ export class WeatherForcastComponent implements OnInit {
   {
     this.WeatherApiService.getWeatherData(String(this.buildCityForm.get('city').value)).subscribe(data =>{
       this.model = data;
-      this.temprature = Math.round(data.main.temp);
-      this.isGeoLocationAvailabe = true;
-      this.isLoaded = true;
+      this.getMoreInformation(data);
       this.buildCityForm.get('city').setValue(null);
     }, (error) => {
       alert("no city found")

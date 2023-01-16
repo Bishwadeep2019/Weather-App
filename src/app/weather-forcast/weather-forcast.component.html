@@ -9,7 +9,7 @@
 </div>
 
 
-<div class="container">
+<div class="container" *ngIf="isLoaded && isGeoLocationAvailabe">
     <div class="upper-data">
         <img src="../../assets/hot.png" alt="" *ngIf="temprature >=20">
         <img src="../../assets/cold.png" alt="" *ngIf="temprature < 20">
@@ -17,18 +17,54 @@
         <div class="weather-data">
             <div class="location">{{model.name}}</div>
             <div class="temperature">{{temprature}}°C</div>
+            <div class="weather">{{weather}}</div>
         </div>
     </div>
 
     <div class="lower-data">
         <div class="more-info-label">
-            More Information
+            <div class="info-block">
+                More Information
+            </div>
         </div>
         <div class="more-info-container">
             <div class="info-block">
                 <div class="info-block-label">
-                    <img src="" alt="">
-                    <span>Feels Like</span>
+                    <img src="../../assets/humidity.png" alt="">
+                    <span>Humidity</span>
+                </div>
+                <div class="info-block-value">
+                    {{model.main.humidity}}
+                </div>
+            </div>
+
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../../assets/temperature.png" alt="">
+                    <span>Feels like</span>
+                </div>
+                <div class="info-block-value">
+                    {{model.main.feels_like}}°C
+                </div>
+            </div>
+
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../../assets/sunrise.png" alt="">
+                    <span>Sunrise</span>
+                </div>
+                <div class="info-block-value">
+                    {{sunrise}}
+                </div>
+            </div>
+
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="../../assets/sunsets.png" alt="">
+                    <span>Sunset</span>
+                </div>
+                <div class="info-block-value">
+                    {{sunset}}
                 </div>
             </div>
         </div>
