@@ -1,0 +1,38 @@
+<!-- <div class="emprature-block" *ngIf="isLoaded && isGeoLocationAvailabe">
+    <p>{{model.name}}</p>
+    <p>{{temprature}}</p>
+</div> -->
+
+<div class="input-block" [formGroup]="buildCityForm" *ngIf="buildCityForm">
+    <input class="city-block" id="city" type="text" formControlName="city" (keydown.enter)="findCity()" placeholder="Enter City">
+    <button class="custom-btn btn-16" (click)="findCity()">Click Me</button>
+</div>
+
+
+<div class="container">
+    <div class="upper-data">
+        <img src="../../assets/hot.png" alt="" *ngIf="temprature >=20">
+        <img src="../../assets/cold.png" alt="" *ngIf="temprature < 20">
+        
+        <div class="weather-data">
+            <div class="location">{{model.name}}</div>
+            <div class="temperature">{{temprature}}°C</div>
+        </div>
+    </div>
+
+    <div class="lower-data">
+        <div class="more-info-label">
+            More Information
+        </div>
+        <div class="more-info-container">
+            <div class="info-block">
+                <div class="info-block-label">
+                    <img src="" alt="">
+                    <span>Feels Like</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> 
+
